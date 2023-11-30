@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Redirect Shorts",
+    "description": "Base Level Extension",
+    "version": "1.0",
+    "permissions":[
+        "tabs"
+    ],
+    "action": {
+      "default_popup": "main.html"
+    },
+    "background":{
+      "service_worker": "background.js"
+    }
+  }
