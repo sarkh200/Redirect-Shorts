@@ -1,14 +1,13 @@
-function redirect(){
-    console.log("Redirected!");
-    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
-        let newUrl = tabs[0].url.replace("youtube.com/shorts", "youtube.com/watch");
-        if(newUrl != tabs[0].url){
-            chrome.tabs.update(undefined, { url: newUrl });
-            console.log(`from ${tabs[0].url} to ${newUrl}`);
-        }
-    });
+function redirect(tab, tabId) {
+    let newUrl = tab.url.replace("youtube.com/shorts", "youtube.com/watch");
+    if (newUrl != tab.url) {
+        chrome.tabs.update(tabId, { url: newUrl });
+        console.log(`Redirected from ${tab.url} to ${newUrl}!`);
+    }
 }
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    redirect();
+    if (/^https?:\/\/(www\.)?youtube\.com\/shorts(?:\/.*)?$/gm.test(tab.url)) {
+        redirect(tab, tabId);
+    }
 })
